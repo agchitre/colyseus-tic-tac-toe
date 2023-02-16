@@ -3,6 +3,7 @@ import express from 'express';
 import cors from "cors";
 import { Server } from 'colyseus';
 import { WebSocketTransport } from '@colyseus/ws-transport';
+import { monitor } from '@colyseus/monitor';
 
 import { TicTacToe } from "./rooms/tictactoe"
 
@@ -18,6 +19,9 @@ const gameServer = new Server({
 });
 
 gameServer.define('tictactoe', TicTacToe);
+
+app.use('/colyseus', monitor())
+
 gameServer.listen(port);
 
 app.use(express.static(__dirname + "/../frontend/public"));
